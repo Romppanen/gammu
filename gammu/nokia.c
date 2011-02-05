@@ -1014,6 +1014,18 @@ void NokiaDisplayTest(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+void NokiaSetMode(int argc, char *argv[])
+{
+	printf("Setting Nokia Modes\n");
+	GSM_Init(TRUE);
+#ifdef GSM_ENABLE_NOKIA_DCT4
+	if (CheckDCT4Only() != ERR_NOTSUPPORTED) {
+		DCT4SetMode(argc, argv);
+	}
+#endif
+	GSM_Terminate();
+}
+
 void NokiaGetT9(int argc, char *argv[])
 {
 	GSM_Init(TRUE);

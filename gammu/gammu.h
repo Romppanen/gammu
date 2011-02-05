@@ -18,6 +18,7 @@ typedef enum {
 	H_DateTime,
 	H_Category,
 	H_Tests,
+	H_Modes,
 #ifdef GSM_ENABLE_BACKUP
 	H_Backup,
 #endif

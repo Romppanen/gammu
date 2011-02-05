@@ -6,5 +6,6 @@ extern void NokiaAddPlayLists(int argc, char *argv[]);
 extern void NokiaAddFile(int argc, char *argv[]);
 extern void NokiaGetADC(int argc, char *argv[]);
 extern void NokiaDisplayTest(int argc, char *argv[]);
+extern void NokiaSetMode(int argc, char *argv[]);
 extern void NokiaGetT9(int argc, char *argv[]);
 extern void NokiaVibraTest(int argc, char *argv[]);

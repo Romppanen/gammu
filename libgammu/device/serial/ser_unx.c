@@ -232,7 +232,7 @@ static GSM_Error serial_setparity(GSM_StateMachine *s, gboolean parity)
 {
     	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
     	struct termios	  	t;
-
+	printf(">>>>>>>>>>> PARITY %d\n",parity);
 	assert(d->hPhone >= 0);
 
     	if (tcgetattr(d->hPhone, &t)) {
@@ -264,6 +264,8 @@ static GSM_Error serial_setdtrrts(GSM_StateMachine *s, gboolean dtr, gboolean rt
 
 	if (s->SkipDtrRts) return ERR_NONE;
 
+	printf(">>>>>>>>>>> DTR %d\n",dtr);
+	printf(">>>>>>>>>>> RTS %d\n",rts);
 	assert(d->hPhone >= 0);
 
     	if (tcgetattr(d->hPhone, &t)) {
@@ -327,7 +329,7 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
 	if (s->SkipDtrRts) return ERR_NONE;
 
 	assert(d->hPhone >= 0);
-
+	printf(">>>>>>>>> SPEED %d\n",speed);
     	if (tcgetattr(d->hPhone, &t)) {
 		GSM_OSErrorInfo(s,"tcgetattr in serial_setspeed");
 		return ERR_DEVICEREADERROR;
@@ -365,7 +367,8 @@ static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
     	struct timeval  		timeout2;
     	fd_set	  			readfds;
     	int	     			actual = 0;
-
+	int i = 0;
+	unsigned char* buffer = (unsigned char*)buf;
 	assert(d->hPhone >= 0);
 
     	FD_ZERO(&readfds);
@@ -378,6 +381,15 @@ static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 		actual = read(d->hPhone, buf, nbytes);
 		if (actual == -1) GSM_OSErrorInfo(s,"serial_read");
     	}
+	if( 0 < actual )
+	{
+		printf("read (%d): ",nbytes);
+		for (i = 0; i < actual; i++)
+		{
+			printf(" %02X",buffer[i]);
+		}
+		printf("\n");
+	}
     	return actual;
 }
 
@@ -387,9 +399,14 @@ static int serial_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
     	int		     	ret;
     	size_t		  	actual = 0;
 	const unsigned char *buffer = (const unsigned char *)buf; /* Just to have correct type */
-
+	size_t i = 0;
 	assert(d->hPhone >= 0);
-
+	printf("write (%d): ",nbytes);
+	for(i  = 0; i< nbytes; i++)
+	{
+		printf(" %02X",buffer[i]);
+	}
+	printf("\n");
     	do {
 		ret = write(d->hPhone, buffer, nbytes - actual);
 		if (ret < 0) {

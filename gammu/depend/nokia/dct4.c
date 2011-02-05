@@ -1009,6 +1009,32 @@ void DCT4DisplayTest(int argc, char *argv[])
 	DCT4_SetPhoneMode(gsm, DCT4_MODE_NORMAL);
 }
 
+void DCT4SetMode(int argc, char *argv[])
+{
+	DCT4_PHONE_MODE mode = DCT4_MODE_NORMAL;
+	if (CheckDCT4Only()!=ERR_NONE) return;
+
+	gsm->User.UserReplyFunctions=UserReplyFunctions4;
+
+	switch(GetInt(argv[2]))
+	{
+	case DCT4_MODE_LOCAL:
+		mode = DCT4_MODE_LOCAL;
+		break;
+	case DCT4_MODE_NORMAL:
+		mode = DCT4_MODE_NORMAL;
+		break;
+	case DCT4_MODE_TEST:
+		mode = DCT4_MODE_TEST;
+		break;
+	default:
+		mode = GetInt(argv[2]);
+		break;
+	}
+
+	DCT4_SetPhoneMode(gsm, mode);
+}
+
 int ADC;
 
 static GSM_Error DCT4_ReplyGetADC(GSM_Protocol_Message msg, GSM_StateMachine *sm)

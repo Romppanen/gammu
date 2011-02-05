@@ -8,6 +8,7 @@ void DCT4GetVoiceRecord	   (int argc, char *argv[]);
 GSM_Error DCT4Info(void);
 void DCT4GetT9		   (int argc, char *argv[]);
 void DCT4DisplayTest	   (int argc, char *argv[]);
+void DCT4SetMode(int argc, char *argv[]);
 void DCT4GetADC		   (int argc, char *argv[]);
 void DCT4VibraTest	   (int argc, char *argv[]);
 void DCT4PlaySavedRingtone (int argc, char *argv[]);
