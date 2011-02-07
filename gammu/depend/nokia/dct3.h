@@ -8,6 +8,7 @@ void DCT3SetPhoneMenus	 (int argc, char *argv[]);
 void DCT3GetSecurityCode (int argc, char *argv[]);
 void DCT3GetADC		 (int argc, char *argv[]);
 void DCT3DisplayTest	 (int argc, char *argv[]);
+void DCT3SetMode	 (int argc, char *argv[]);
 void DCT3VibraTest	 (int argc, char *argv[]);
 void DCT3GetT9		 (int argc, char *argv[]);
 

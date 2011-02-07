@@ -316,23 +316,57 @@ void DCT3DisplayTest(int argc, char *argv[])
 	if (GetInt(argv[2]) != 1 && GetInt(argv[2]) != 2) {
 		printf("Give 1 or 2 as test number\n");
 	}
-
 	gsm->User.UserReplyFunctions=UserReplyFunctions3;
-
 	req[4] = GetInt(argv[2]);
 	gsm->Protocol.Functions->WriteMessage(gsm, req, 5, 0x40);
 
 	printf("Press any key to continue...\n");
 	GetLine(stdin, ans, 99);
-
+	
 	req[3] = 0x02;
 	req[4] = 0x03;
 	gsm->Protocol.Functions->WriteMessage(gsm, req, 5, 0x40);
-
 	error=DCT3_EnableSecurity (gsm, 0x03);
 	Print_Error(error);
 }
 
+void DCT3SetMode(int argc, char *argv[])
+{
+	GSM_Error error;
+	unsigned char req[] =  {0x00, 0x01, 0xD3,
+				0x03,          	/* 3=set, 2=clear */
+				0x03};	 	/* test number */
+
+	CheckDCT3();
+
+	if (GetInt(argv[2]) != 1 && GetInt(argv[2]) != 2) {
+		printf("Give 1 or 2 as mode number\n");
+	}
+
+	gsm->User.UserReplyFunctions=UserReplyFunctions3;
+	if(1 == GetInt(argv[2]))
+	{		
+		req[3] = 0x02;
+		req[4] = 0x03;
+		gsm->Protocol.Functions->WriteMessage(gsm, req, 5, 0x40);
+	}
+	else if( 2 == GetInt(argv[2]))
+	{
+		unsigned char req1[] =  {0x00, 0x01, 0xce, 0x1d,
+			0x00,
+			0x04,
+			0x00,
+			0x00
+		};
+		gsm->Protocol.Functions->WriteMessage(gsm, req1, sizeof(req1), 0x40);
+	}
+	else
+	{
+		return;
+	}
+	error=DCT3_EnableSecurity (gsm, 0x03);
+	Print_Error(error);
+}
 void DCT3netmonitor(int argc, char *argv[])
 {
 	GSM_Error error;
