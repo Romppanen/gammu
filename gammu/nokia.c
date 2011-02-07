@@ -1018,6 +1018,11 @@ void NokiaSetMode(int argc, char *argv[])
 {
 	printf("Setting Nokia Modes\n");
 	GSM_Init(TRUE);
+#ifdef GSM_ENABLE_NOKIA_DCT3
+	if (CheckDCT3Only() != ERR_NOTSUPPORTED) {
+		DCT3SetMode(argc,argv);
+	}
+#endif
 #ifdef GSM_ENABLE_NOKIA_DCT4
 	if (CheckDCT4Only() != ERR_NOTSUPPORTED) {
 		DCT4SetMode(argc, argv);
